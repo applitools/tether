@@ -221,7 +221,6 @@ class TetherClass extends Evented {
     this.element = element;
     this.target = target;
     this.targetModifier = targetModifier;
-    this._scrollParent = scrollParent;
 
     if (this.target === 'viewport') {
       this.target = document.body;
@@ -261,10 +260,10 @@ class TetherClass extends Evented {
       this.disable();
     }
 
-    if (this._scrollParent) {
+    if (scrollParent) {
       let node = this.target;
       while (node) {
-        if (node.classList.contains(this._scrollParent)) {
+        if (node.classList.contains(scrollParent)) {
           break;
         }
 
@@ -273,13 +272,10 @@ class TetherClass extends Evented {
 
       this.scrollParents = [node]
     }
-
-    if (this._scrollParent && !this.scrollParents) {
-      if (this.targetModifier === 'scroll-handle') {
-        this.scrollParents = [this.target];
-      } else {
-        this.scrollParents = getScrollParents(this.target);
-      }
+    else if (this.targetModifier === 'scroll-handle') {
+      this.scrollParents = [this.target];
+    } else {
+      this.scrollParents = getScrollParents(this.target);
     }
 
     if (!(this.options.enabled === false)) {

@@ -678,7 +678,7 @@ var TetherClass = (function (_Evented) {
       var element = _options.element;
       var target = _options.target;
       var targetModifier = _options.targetModifier;
-      var _scrollParent = _options.scrollParent;
+      var scrollParent = _options.scrollParent;
 
       this.element = element;
       this.target = target;
@@ -722,10 +722,10 @@ var TetherClass = (function (_Evented) {
         this.disable();
       }
 
-      if (_scrollParent) {
+      if (scrollParent) {
         var node = this.target;
         while (node) {
-          if (node.classList.contains(_scrollParent)) {
+          if (node.classList.contains(scrollParent)) {
             break;
           }
 
@@ -734,13 +734,10 @@ var TetherClass = (function (_Evented) {
 
         this.scrollParents = [node];
       }
-
-      if (this._scrollParent && !this.scrollParents) {
-        if (this.targetModifier === 'scroll-handle') {
-          this.scrollParents = [this.target];
-        } else {
-          this.scrollParents = getScrollParents(this.target);
-        }
+      else if (this.targetModifier === 'scroll-handle') {
+        this.scrollParents = [this.target];
+      } else {
+        this.scrollParents = getScrollParents(this.target);
       }
 
       if (!(this.options.enabled === false)) {
